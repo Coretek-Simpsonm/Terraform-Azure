@@ -1,8 +1,8 @@
 #Create Azure Site Recover Vault
 resource "azurerm_recovery_services_vault" "msimpsonASR" {
   name                = "msimpsonASR"
-  location            = azurerm_resource_group.msimpson.location
-  resource_group_name = azurerm_resource_group.msimpson.name
+  location            = var.location
+  resource_group_name = data.azurerm_resource_group.msimpson.name
   sku                 = "Standard"
   soft_delete_enabled = true
   # Remove the invalid attribute
@@ -14,7 +14,7 @@ resource "azurerm_recovery_services_vault" "msimpsonASR" {
 #Create Azure Recovery Services Vault Backup Policy
 resource "azurerm_backup_policy_vm" "msimpsonASR-vmbackuppolicy" {
   name                = "msimpsonASR-vmbackuppolicy"
-  resource_group_name = azurerm_resource_group.msimpson.name
+  resource_group_name = data.azurerm_resource_group.msimpson.name
   recovery_vault_name = azurerm_recovery_services_vault.msimpsonASR.name
 
   timezone = "UTC"
